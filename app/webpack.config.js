@@ -8,12 +8,15 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   plugins: [
-    new CopyWebpackPlugin({
-      patterns:[
-          { from: "./src/index.html", to: "index.html" }
-      ]
-    }),
+    new CopyWebpackPlugin(
+          [{ from: "./src/index.html", to: "index.html" }]
+    ),
   ],
-  devServer: { contentBase: path.join(__dirname, "dist"), compress: true },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist")
+    },
+    hot: true
+    },
   mode: 'development'
 };

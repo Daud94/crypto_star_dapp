@@ -4,6 +4,9 @@ build
 
 # production
 /build
+node_modules
+.secret
+.infuraKey
 
 # misc
 .DS_Store

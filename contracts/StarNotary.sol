@@ -9,21 +9,14 @@ contract StarNotary is ERC721 {
     // Star data
     struct Star {
         string name;
-        string symbol;
     }
 
-    string name;
-    string symbol;
+    string public constant name_ = "Horus";
+    string public constant symbol_ = "HRS";
 
     // Implement Task 1 Add a name and symbol properties
     // name: Is a short name to your token
     // symbol: Is a short string like 'USD' -> 'American Dollar'
-
-    constructor(string name_, string symbol_){
-        name = name_;
-        symbol = symbol_;
-    }
-    
 
     // mapping the Star with the Owner Address
     mapping(uint256 => Star) public tokenIdToStarInfo;
@@ -32,8 +25,8 @@ contract StarNotary is ERC721 {
 
     
     // Create Star using the Struct
-    function createStar(string memory _name, string _symbol ,uint256 _tokenId) public { // Passing the name and tokenId as a parameters
-        Star memory newStar = Star(_name,_symbol); // Star is an struct so we are creating a new Star
+    function createStar(string memory _name,uint256 _tokenId) public { // Passing the name and tokenId as a parameters
+        Star memory newStar = Star(_name); // Star is an struct so we are creating a new Star
         tokenIdToStarInfo[_tokenId] = newStar; // Creating in memory the Star -> tokenId mapping
         _mint(msg.sender, _tokenId); // _mint assign the the star with _tokenId to the sender address (ownership)
     }
@@ -66,8 +59,7 @@ contract StarNotary is ERC721 {
     // Implement Task 1 lookUptokenIdToStarInfo
     function lookUptokenIdToStarInfo (uint _tokenId) public view returns (string memory) {
         //1. You should return the Star saved in tokenIdToStarInfo mapping
-        Star memory star = tokenIdToStarInfo[_tokenId];
-        return star.name;
+        return tokenIdToStarInfo[_tokenId].name;
     }
 
     // Implement Task 1 Exchange Stars function
@@ -103,6 +95,14 @@ contract StarNotary is ERC721 {
 
         require(msg.sender == ownerOf(_tokenId), "You must be the owner of the token");
         transferFrom(msg.sender, _to1, _tokenId);
+    }
+
+    function name() public pure returns (string memory){
+        return name_;
+    }
+
+    function symbol() public pure returns (string memory){
+        return symbol_;
     }
 
 }
